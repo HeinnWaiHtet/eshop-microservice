@@ -18,6 +18,7 @@
     <None Remove="Products\GetProductByCategory\" />
     <None Remove="Products\UpdateProduct\" />
     <None Remove="Products\DeleteProduct\" />
+    <None Remove="Data\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -29,6 +30,7 @@
     <Folder Include="Products\GetProductByCategory\" />
     <Folder Include="Products\UpdateProduct\" />
     <Folder Include="Products\DeleteProduct\" />
+    <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks.csproj">
