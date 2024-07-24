@@ -12,19 +12,15 @@ public class GetProductByIdHandler
 	: IQueryHandler<GetProductByIdQuery, GetProductByIdResult>
 {
     private IDocumentSession _session;
-    ILogger<GetProductHandler> logger;
-    public GetProductByIdHandler(IDocumentSession session, ILogger<GetProductHandler> logger)
+    public GetProductByIdHandler(IDocumentSession session)
     {
         this._session = session;
-        this.logger = logger;
     }
 
     public async Task<GetProductByIdResult> Handle(
         GetProductByIdQuery query,
         CancellationToken cancellationToken)
     {
-        logger.LogInformation($"Get Product By Id called {query.Id}");
-
         var result = await this._session.LoadAsync<Product>(query.Id, cancellationToken);
 
         if(result is null)

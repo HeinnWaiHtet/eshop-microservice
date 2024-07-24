@@ -1,6 +1,4 @@
 ﻿
-using Catalog.API.Products.DeleteProduct;
-
 namespace Catalog.API.Products.UpdateProduct;
 
 public record UpdateProductCommand(
@@ -32,19 +30,15 @@ public class UpdateProductHandler
     :ICommandHandler<UpdateProductCommand, UpdateProductResult>
 {
     private IDocumentSession session;
-    ILogger<UpdateProductHandler> logger;
-    public UpdateProductHandler(IDocumentSession session, ILogger<UpdateProductHandler> logger)
+    public UpdateProductHandler(IDocumentSession session)
     {
         this.session = session;
-        this.logger = logger;
     }
 
     public async Task<UpdateProductResult> Handle(
         UpdateProductCommand command,
         CancellationToken cancellationToken)
     {
-        logger.LogInformation($"Update Product Handler called with {command}");
-
         var product = await session.LoadAsync<Product>(command.Id, cancellationToken);
 
         if (product is null) throw new ProductNotFoundException(command.Id);

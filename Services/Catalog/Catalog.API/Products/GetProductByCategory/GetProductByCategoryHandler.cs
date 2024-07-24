@@ -12,19 +12,15 @@ public class GetProductByCategoryHandler
 	:IQueryHandler<GetProductByCategoryQuery, GetProductByCategoryResult>
 {
     private IDocumentSession session;
-    ILogger<GetProductByCategoryHandler> logger;
-    public GetProductByCategoryHandler(IDocumentSession session, ILogger<GetProductByCategoryHandler> logger)
+    public GetProductByCategoryHandler(IDocumentSession session)
     {
         this.session = session;
-        this.logger = logger;
     }
 
     public async Task<GetProductByCategoryResult> Handle(
         GetProductByCategoryQuery query,
         CancellationToken cancellationToken)
     {
-        this.logger.LogInformation($"Get Product By Category : {query.Category} ");
-
         var result = await this.session.Query<Product>()
             .Where(p => p.Category.Contains(query.Category))
             .ToListAsync();
