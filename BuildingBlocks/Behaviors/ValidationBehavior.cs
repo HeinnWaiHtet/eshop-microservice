@@ -5,7 +5,7 @@ namespace BuildingBlocks.Behaviors;
 
 public class ValidationBehavior<TRequest, TResponse>
 	: IPipelineBehavior<TRequest, TResponse>
-	where TRequest : ICommand<TRequest>
+	where TRequest : ICommand<TResponse>
 {
 	IEnumerable<IValidator<TRequest>> validators;
 

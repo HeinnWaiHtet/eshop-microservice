@@ -1,7 +1,9 @@
 ﻿
+using Catalog.API.Products.DeleteProduct;
+
 namespace Catalog.API.Products.UpdateProduct;
 
-public record UpdaetProductCommand(
+public record UpdateProductCommand(
 	Guid Id,
     string Name,
     List<string> Category,
@@ -11,8 +13,23 @@ public record UpdaetProductCommand(
 
 public record UpdateProductResult(bool IsSuccess);
 
+public class UpdateProductCommandValidator : AbstractValidator<UpdateProductCommand>
+{
+    public UpdateProductCommandValidator()
+    {
+        RuleFor(command => command.Id).NotEmpty().WithMessage("Product ID is required");
+
+        RuleFor(command => command.Name)
+            .NotEmpty().WithMessage("Name is required")
+            .Length(2, 150).WithMessage("Name must be between 2 and 150 characters");
+
+        RuleFor(command => command.Price)
+            .GreaterThan(0).WithMessage("Price must be greater than 0");
+    }
+}
+
 public class UpdateProductHandler
-    :ICommandHandler<UpdaetProductCommand, UpdateProductResult>
+    :ICommandHandler<UpdateProductCommand, UpdateProductResult>
 {
     private IDocumentSession session;
     ILogger<UpdateProductHandler> logger;
@@ -23,14 +40,14 @@ public class UpdateProductHandler
     }
 
     public async Task<UpdateProductResult> Handle(
-        UpdaetProductCommand command,
+        UpdateProductCommand command,
         CancellationToken cancellationToken)
     {
         logger.LogInformation($"Update Product Handler called with {command}");
 
         var product = await session.LoadAsync<Product>(command.Id, cancellationToken);
 
-        if (product is null) throw new ProductNotFoundException();
+        if (product is null) throw new ProductNotFoundException(command.Id);
 
         product.Name = command.Name;
         product.Category = command.Category;

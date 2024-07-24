@@ -25,26 +25,16 @@ public class CreateProductCommandHandler
     : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     private IDocumentSession _session;
-    private IValidator<CreateProductCommand> validator;
     public CreateProductCommandHandler(
-        IDocumentSession session,
-        IValidator<CreateProductCommand> validator)
+        IDocumentSession session)
     {
         this._session = session;
-        this.validator = validator;
     }
 
     public async Task<CreateProductResult> Handle(
         CreateProductCommand command,
         CancellationToken cancellationToken)
     {
-        var result = await this.validator.ValidateAsync(command, cancellationToken);
-        var errors = result.Errors.Select(x => x.ErrorMessage).ToList();
-        if (errors.Any())
-        {
-            throw new ValidationException(errors.FirstOrDefault());
-        }
-
         // Create Product Entity From Command Object
         var product = new Product
         {
