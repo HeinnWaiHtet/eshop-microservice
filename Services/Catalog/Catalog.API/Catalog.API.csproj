@@ -12,10 +12,31 @@
     <None Remove="Models\" />
     <None Remove="Products\" />
     <None Remove="Products\CreateProduct\" />
+    <None Remove="Products\GetProducts\" />
+    <None Remove="Products\GetProductById\" />
+    <None Remove="Exception\" />
+    <None Remove="Products\GetProductByCategory\" />
+    <None Remove="Products\UpdateProduct\" />
+    <None Remove="Products\DeleteProduct\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Products\" />
     <Folder Include="Products\CreateProduct\" />
+    <Folder Include="Products\GetProducts\" />
+    <Folder Include="Products\GetProductById\" />
+    <Folder Include="Exception\" />
+    <Folder Include="Products\GetProductByCategory\" />
+    <Folder Include="Products\UpdateProduct\" />
+    <Folder Include="Products\DeleteProduct\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Carter" Version="8.2.1" />
+    <PackageReference Include="Marten" Version="7.24.0" />
   </ItemGroup>
 </Project>
